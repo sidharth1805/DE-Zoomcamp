@@ -17,11 +17,15 @@ def main(params):
     file_name='output.parquet'
 
     os.system(f"wget {url} -O {file_name}")
+    print("file downloaded SU")
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
+    print("Connected to DataBase SU")
 
     temp_df=pd.read_parquet(file_name, engine='pyarrow')
+    print("df SU")
+
     temp_df.head(n=0).to_sql(name=table_name,con=engine, if_exists='replace')
-    import pyarrow.parquet as pq
+    print('header SU')
 
     pfile = pq.ParquetFile(file_name)
     count=0
